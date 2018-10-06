@@ -1,0 +1,83 @@
+<head xmlns:th="http://www.w3.org/1999/xhtml">
+    <link rel="stylesheet" th:href="${baseContext.staticBase}+'/lib/ztree/v3.0/css/metroStyle/metroStyle.css'">
+    <link rel="stylesheet" th:href="${baseContext.staticBase}+'/lib/ztree/v3.0/css/zTreeStyle/zTreeStyle.css'">
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/ztree/v3.0/js/jquery.ztree.core.js'"></script>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/ztree/v3.0/js/jquery.ztree.excheck.js'"></script>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/ztree/v3.0/js/jquery.ztree.exedit.js'"></script>
+</head>
+<body xmlns:th="http://www.w3.org/1999/xhtml">
+<div style="padding: 10px">
+    <blockquote class="layui-elem-quote">
+        选中菜单 在footer中执行新增 修改等操作
+    </blockquote>
+
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">树形菜单</div>
+                    <div class="layui-card-body" style="min-height: 150px;">
+                        <ul id="demo" class="layui-box layui-tree"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---->
+</div>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script th:inline="javascript">
+
+    layui.use(['tree','table'], function () {
+        SHOP.loadFooter(`<button onclick="addMenu()" class="layui-btn layui-btn layui-btn-sm">新增</button>
+    <label>当前选中：<span id="menu-info"></span><input id="menu-sel-id" type="hidden"></label>
+    `)
+
+        SHOP.doPost("treeAjax", null, function (data) {
+            const _MENUS = data.data;
+            const $TopMenu = [];
+            for (let menu of _MENUS) {
+                $TopMenu.push(buildMenuItem(menu))
+            }
+            layui.tree({
+                elem: '#demo' //传入元素选择器
+                ,nodes:$TopMenu
+                ,click: function(node){
+                    $("#menu-sel-id").val(node.id)
+                    $("#menu-info").html("名称："+node.name+"  "+node.level+"级菜单 URL: "+node.url)
+                } });
+        });
+
+
+    });
+
+    function buildMenuItem(menu) {
+        var menuItem = {
+            id: menu.id,
+            pid: menu.parentId,
+            name: menu.menuName ,
+            url:menu.menuUrl,
+            level:menu.menuLevel,
+            children: []
+        };
+        if (menu.children && menu.children.length > 0) {
+            for (let leftMenu of menu.children) {
+                menuItem.children.push(buildMenuItem(leftMenu))
+            }
+        }
+        return menuItem;
+    }
+
+    function addMenu() {
+        var selMenuId = $("#menu-sel-id").val()
+        if (!selMenuId)  selMenuId=0;
+        var url= 'addDialog?parentId='+selMenuId;
+        layer.open({
+            type: 2,
+            area: ['45%', '80%'],
+            content: url
+        });
+    }
+</script>
+
+</body>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>YY商城</title>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/jquery/jquery-3.2.1.min.js'"></script>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/layui/v2.3.0/layui.js'"></script>
+    <link rel="stylesheet" th:href="${baseContext.staticBase}+'/lib/layui/v2.3.0/css/layui.css'">
+</head>
+<body class="layui-layout-body">
+<h1 style="text-align: center" th:text="${goods.goodsTitle}"></h1>
+<img th:src="${goods.defaultImgUrl}">
+
+<script>
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

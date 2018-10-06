@@ -1,0 +1,26 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml"
+     th:fragment="mgrHeader">
+    <div class="layui-header">
+        <div class="layui-logo">商城管理后台</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item " th:each="item : ${TopMenusList}"  th:classappend="(${item.isActive}?'layui-this':'')"><a th:href="${item.menuUrl}" th:text="${item.menuName}">??</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="javascript:SHOP.doPost('/central/m/uc/refreshAll',null,function(data) {
+              if (data.success) {alert('刷新成功'); location.reload()} })">刷新缓存</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+</div>
+

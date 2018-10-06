@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: yyshop-config
+  profiles:
+    active: native
+  cloud:
+    config:
+      label: master #配置仓库的分支（可略）
+      server:
+#        git:
+#          uri: https://gitee.com/cengel/GildAction/tree/master/
+#          searchPaths: yy_shop/shop_component/shop_config/src/main/resources/conf
+#          username: cengel
+#          password: zc1992
+        native:
+          searchLocations: file:/application/config
+
+server:
+  port: 6002 #启动端口
+
+

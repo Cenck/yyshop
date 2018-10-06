@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>添加</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/jquery/jquery-3.2.1.min.js'"></script>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/layui/v2.3.0/layui.js'"></script>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/js/wa.jquery.plus.js'"></script>
+    <link rel="stylesheet" th:href="${baseContext.staticBase}+'/lib/layui/v2.3.0/css/layui.css'">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>添加</legend>
+</fieldset>
+<form class="layui-form" th:action="@{save}" lay-filter="addForm">
+    <input type="hidden" th:name="${_csrf.parameterName}"   th:value="${_csrf.token}" />
+    <input type="hidden" name="parentId" th:value="${parentId}">
+    <input type="hidden" name="platform" value="mgr">
+    <div class="layui-form-item ">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <input placeholder="请输入" lay-verify="MENU_NAME" class="layui-input" name="menuName">
+        </div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">菜单URL</label>
+        <div class="layui-input-block">
+            <input placeholder="请输入" lay-verify="MENU_URL" class="layui-input" name="menuUrl">
+        </div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input placeholder="请输入" lay-verify="SORT_ORDER" class="layui-input" name="sortOrder">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <span class="layui-btn" lay-submit="" lay-filter="add-btn">立即提交</span>
+        </div>
+    </div>
+</form>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+                , layer = layui.layer
+                , layedit = layui.layedit
+                , laydate = layui.laydate;
+
+        //监听提交
+        form.on('submit(add-btn)', function (data) {
+            layer.confirm('是否提交？', {
+                btn: ['确认','取消'] //按钮
+            }, function(){
+                $.post("save",data.field,function (data) {
+                    if(data && data.success){
+                        layer.msg('保存成功', {icon: 1});
+                        location.reload()
+                        if (parent) parent.location.reload()
+                    }else layer.msg(data.message)
+                },'json');
+            });
+        });
+
+        //表单初始赋值
+        form.val('addForm', {
+        })
+    });
+</script>
+
+</body>
+</html>

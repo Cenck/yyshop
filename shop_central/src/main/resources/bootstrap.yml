@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      label: master
+      uri: http://conf.yyshop.com:6002
+      name: conf
+      profile: ${config.profile:dev} #本地开发环境可以释放该注释
+
+

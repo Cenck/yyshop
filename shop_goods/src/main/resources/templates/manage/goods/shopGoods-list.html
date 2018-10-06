@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+
+<div class="entityTable" style="padding: 10px">
+    <form id="head-form" class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">ID</label>
+                <div class="layui-input-inline">
+                    <input name="id"  class="layui-input" type="text">
+                </div>
+            </div>
+        </div>
+        <span class="layui-btn" id="search-btn" data-type="reload">搜索</span>
+        <a class="layui-btn" href="add" >新增</a>
+    </form>
+</div>
+
+<table class="layui-hide" id="LAY_TABLE_ENTITY" lay-filter="entity"></table>
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //方法级渲染
+        table.render({
+            elem: '#LAY_TABLE_ENTITY'
+            ,url: 'grid'
+            ,cols: [[
+                {field:'id', title: 'ID', width:80, sort: true, fixed: true}
+                             ,{field:'goodsNo', title: '商品编号'}
+                 ,{field:'goodsTitle', title: '商品名称'}
+                 ,{field:'subtitle', title: '商品副名称'}
+                 ,{field:'seoKeyWords', title: '搜索关键词'}
+                 ,{field:'saleAddress', title: '售卖地'}
+                 ,{field:'agencyName', title: '代理商名称'}
+                 ,{field:'marketPrice', title: '市场价'}
+                 ,{field:'salePrice', title: '销售价'}
+                 ,{field:'costPrice', title: '成本价'}
+                 ,{field:'catName', title: '分类名称'}
+                 ,{field:'typeName', title: '类型名称'}
+                 ,{field:'brandName', title: '品牌名称'}
+                 ,{field:'goodsSpecValues', title: ''}
+                 ,{field:'givePoints', title: '获得经验值'}
+                 ,{field:'saleNum', title: '月销量'}
+                 ,{field:'totalSaleNum', title: '总销量'}
+                 ,{field:'totalStockNum', title: '总库存'}
+                 ,{field:'afterService', title: '售后'}
+                 ,{field:'afterServiceTime', title: '售后时间'}
+                 ,{field:'beginTime', title: '商品开放时间'}
+                 ,{field:'endTime', title: '商品失效时间'}
+                 ,{field:'presaletime', title: '预售日期'}
+                 ,{field:'viewCount', title: '浏览次数'}
+                 ,{field:'isEnable', title: ''}
+                 ,{field:'isGift', title: '是否礼物'}
+                 ,{field:'isOnSale', title: '是否在售0是1否'}
+                 ,{field:'isLimitGoods', title: '是否是限购商品'}
+                 ,{field:'isReal', title: '是否虚拟商品0否1是'}
+                 ,{field:'defaultImgUrl', title: '商品展示图片'}
+                 ,{field:'defaultImgThumbUrl', title: '默认展示图片-压缩'}
+                 ,{field:'isHot', title: '是否热搜'}
+                 ,{field:'isNew', title: '是否新品'}
+                 ,{field:'grossWeight', title: '毛重'}
+                 ,{field:'netWeight', title: '静重'}
+                 ,{field:'volume', title: '体积'}
+            ],]
+            ,id: 'tableReload'
+            ,page: true
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                //执行重载
+                table.reload('tableReload', {
+                    where: $("form#head-form").serializeObject()
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                });
+            }
+        };
+
+        $('#search-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+
+</body>
+</html>

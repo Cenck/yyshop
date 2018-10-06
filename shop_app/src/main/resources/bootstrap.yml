@@ -1,0 +1,37 @@
+spring:
+  cloud:
+    config:
+      label: master
+      uri: http://conf.yyshop.com:6002
+#      uri: http://localhost:6002
+      name: conf
+      profile: ${config.profile:dev} #本地开发环境可以释放该注释
+    stream:
+      bindings:
+        helloIn:
+          destination: mq-hello
+        helloOut:
+          destination: mq-hello
+
+
+dubbo:
+  application:
+    id: shop-app
+    name: shop-app
+    version: 1.0
+    qos-enable: true
+    qos-port: 11111
+  protocol:
+    port: 20881
+    name: dubbo
+    id: dubbo
+  scan:
+    base-packages: com.cengel.yyshop
+  consumer:
+    timeout: 30000
+  provider:
+    timeout: 30000
+    filter: onlineProvider
+
+
+

@@ -1,0 +1,37 @@
+## 数据源配置
+hibernate:
+  url: jdbc:mysql://47.98.169.89:3306/yy_shop?useUnicode=true&characterEncoding=UTF8
+  driverClass: com.mysql.jdbc.Driver
+  username: yyshop
+  password: Yy.Shop_2018
+  entityScanPkgs:
+    - com.cengel.yyshop
+redis:
+  database: 0
+#  host: 192.168.200.159
+#  password: weiya
+  host: 47.75.63.136
+  password: zhao
+  port: 6379
+  maxTotal: 1024
+  minIdle: 0 #最大空闲连接
+  maxIdle: 200 #最大空间连接
+  maxWait: 1000  # 连接池最大阻塞等待时间（使用负值表示没有限制）
+  testOnBorrow: true
+  domain: yyshop
+webmvc:
+  baseContext:
+    staticBase: "http://47.98.169.89/static"
+activemq:
+  activemqQueue: shop
+  brokerUrl: tcp://192.168.200.159:61616
+  packages:
+    #            trust-all: true
+    trusted: com.weiare,com.qianli.travel,java
+  user: admin
+  password: admin
+  queue: ${spring.application.name}
+  pool:
+    #            expiry-timeou: 0
+    idle-timeout: 5000
+    max-connections: 10

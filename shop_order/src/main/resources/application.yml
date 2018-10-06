@@ -1,0 +1,12 @@
+
+server:
+    port: 6066
+    servlet:
+        context-path: /order
+
+spring:
+    application:
+        name: shop_order
+    thymeleaf:
+        prefix: classpath:/templates
+        suffix: .html

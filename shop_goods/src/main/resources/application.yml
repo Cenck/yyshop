@@ -1,0 +1,18 @@
+server:
+  port: 6065
+  servlet:
+    context-path: /goods
+
+spring:
+  application:
+    name: shop_goods
+
+cengel:
+  amq:
+    topics:  hello
+
+
+
+
+
+

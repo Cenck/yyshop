@@ -1,0 +1,22 @@
+<sitemesh>
+
+    <!--默认情况下，
+        sitemesh 只对 HTTP 响应头中 Content-Type 为 text/html 的类型进行拦截和装饰，
+        我们可以添加更多的 mime 类型 -->
+    <mime-type>text/html</mime-type>
+    <mapping path="/**/*Dialog" exclue="true"/>
+
+    <mapping>
+        <decorator>/decorator/mgr</decorator>
+        <path>/m/*</path>
+
+    </mapping>
+
+
+
+    <!-- 自定义 tag 规则 -->
+    <!--<content-processor>-->
+        <!--<tag-rule-bundle class="com.something.CssCompressingBundle" />-->
+        <!--<tag-rule-bundle class="com.something.LinkRewritingBundle"/>-->
+    <!--</content-processor>-->
+</sitemesh>

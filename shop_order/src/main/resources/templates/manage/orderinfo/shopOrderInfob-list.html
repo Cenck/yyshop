@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+
+<div class="entityTable" style="padding: 10px">
+    <form id="head-form" class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">ID</label>
+                <div class="layui-input-inline">
+                    <input name="id"  class="layui-input" type="text">
+                </div>
+            </div>
+        </div>
+        <span class="layui-btn" id="search-btn" data-type="reload">搜索</span>
+        <a class="layui-btn" href="add" >新增</a>
+    </form>
+</div>
+
+<table class="layui-hide" id="LAY_TABLE_ENTITY" lay-filter="entity"></table>
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //方法级渲染
+        table.render({
+            elem: '#LAY_TABLE_ENTITY'
+            ,url: 'grid'
+            ,cols: [[
+                {field:'id', title: 'ID', width:80, sort: true, fixed: true}
+                             ,{field:'orderSn', title: ''}
+                 ,{field:'orderStatus', title: ''}
+                 ,{field:'shippingStatus', title: ''}
+                 ,{field:'payStatus', title: ''}
+                 ,{field:'shippingTime', title: ''}
+                 ,{field:'isCod', title: ''}
+                 ,{field:'tradeNo', title: ''}
+                 ,{field:'payTime', title: ''}
+                 ,{field:'goodsAmount', title: ''}
+                 ,{field:'payFee', title: ''}
+                 ,{field:'shippingFee', title: ''}
+                 ,{field:'insuredFee', title: ''}
+                 ,{field:'invoiceFee', title: ''}
+                 ,{field:'integralFee', title: ''}
+                 ,{field:'couponsSn', title: ''}
+                 ,{field:'gcardSn', title: ''}
+                 ,{field:'discountAmount', title: ''}
+                 ,{field:'orderAmount', title: ''}
+                 ,{field:'giftIntegral', title: ''}
+                 ,{field:'giftCoupons', title: ''}
+                 ,{field:'confirmTime', title: ''}
+                 ,{field:'extensionCode', title: ''}
+                 ,{field:'deliveryNote', title: ''}
+                 ,{field:'invoiceTitle', title: ''}
+                 ,{field:'invoiceType', title: ''}
+                 ,{field:'invoiceContent', title: ''}
+                 ,{field:'payNote', title: ''}
+                 ,{field:'toBuyer', title: ''}
+                 ,{field:'sdDesc', title: ''}
+                 ,{field:'failDesc', title: ''}
+                 ,{field:'isCanComment', title: ''}
+                 ,{field:'source', title: ''}
+                 ,{field:'printstate', title: ''}
+                 ,{field:'operator', title: ''}
+                 ,{field:'orderRemark', title: ''}
+                 ,{field:'postscript', title: ''}
+                 ,{field:'alternatefield1', title: ''}
+                 ,{field:'alternatefield2', title: ''}
+                 ,{field:'promotesmoney', title: ''}
+            ],]
+            ,id: 'tableReload'
+            ,page: true
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                //执行重载
+                table.reload('tableReload', {
+                    where: $("form#head-form").serializeObject()
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                });
+            }
+        };
+
+        $('#search-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+spring:
+  cloud:
+    config:
+      label: master
+      uri: http://conf.yyshop.com:6002
+#      uri: http://localhost:6002
+      name: conf
+      profile: ${config.profile:dev} #本地开发环境可以释放该注释
+    stream:
+      bindings:
+        sendCreateGoodsTaskAsyncIn:
+          destination: mq-goods
+
+dubbo:
+  application:
+    id: shop-goods
+    name: shop-goods
+    version: 1.0
+    qos-enable: true
+    qos-port: 11115
+  registry:
+    protocol: zookeeper
+    address: zookeeper://zk.yyshop.com:2181
+    id: goods-reg
+  protocol:
+    port: 20885
+    name: dubbo
+    id: dubbo
+    status: server
+  scan:
+    base-packages: com.cengel.yyshop
+  consumer:
+    timeout: 3000
+  provider:
+    timeout: 30000
+    filter: onlineProvider

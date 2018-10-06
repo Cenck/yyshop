@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>商城欢迎页面</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="https://cdn.bootcss.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+    <script src="js/yyshop.swap.js"></script>
+</head>
+<body>
+<div ng-app="myApp" ng-controller="siteCtrl">
+    <h1>{{hello}} </h1>
+    <h4>Hello,{{name}} </h4>
+    <h6>This is yyshop web app hello page.</h6>
+    <ul>
+        <li ng-repeat="x in list">
+            <a ng-href="{{x.url}}">{{x.name}}</a>
+        </li>
+    </ul>
+    ​
+</div>
+​
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('siteCtrl', function ($scope, $http) {
+        $scope.name = "Visitor ,";
+        $http.get("/app/hello")
+            .then(function (response) {
+                $scope.list = response.data.data;
+                $scope.name = response.data.name;
+                $scope.hello = response.data.name;
+
+            });
+    });
+</script>
+​
+</body>
+</html>

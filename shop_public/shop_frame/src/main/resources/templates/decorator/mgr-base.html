@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="此页面内容的简介">
+    <meta name="keywords" content="关键词1，关键词2，关键词3…关键词N"/>
+    <meta name="copyright" content="版权信息">
+    <meta name="mgr" content="管理平台">
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/jquery/jquery-3.2.1.min.js'"></script>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/lib/layui/v2.3.0/layui.js'"></script>
+    <script type="text/javascript" th:src="${baseContext.staticBase}+'/js/wa.jquery.plus.js'"></script>
+    <link rel="stylesheet" th:href="${baseContext.staticBase}+'/lib/layui/v2.3.0/css/layui.css'">
+
+    <sitemesh:write property='head'/>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <!--顶级菜单(TOP)-->
+    <div th:include="/decorator/mgr-base_header :: mgrHeader"></div>
+
+    <!--左侧菜单(LEFT)-->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item " th:each="item : ${LeftMenusList}" th:classappend="(${item.isActive}?'layui-nav-itemed':'')" >
+                    <a class="" href="javascript:;" th:text="${item.menuName}">??</a>
+                    <dl class="layui-nav-child" >
+                        <dd><a th:href="${menu.menuUrl}" class="curl" th:text="${menu.menuName}" th:each="menu : ${item.children}"  th:classappend="(${menu.isActive}?'layui-this':'')">??</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--核心内容(CENTRAL)-->
+    <div class="layui-body">
+        <sitemesh:write property='body'></sitemesh:write>
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script>
+    //
+    <!--定义全局方法-->
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+    SHOP = {
+        loadFooter: function ($dom) {
+            $(".layui-footer").empty();
+            $(".layui-footer").append($dom)
+        },
+        doPost: function (url, params, callback) {
+            if (!params) params={}
+            params['[[${_csrf.parameterName}]]']= '[[${_csrf.token}]]'
+            $.post(url, params, function (data) {
+                callback(data)
+            }, "json");
+        }
+    };
+</script>
+</body>
+</html>
+

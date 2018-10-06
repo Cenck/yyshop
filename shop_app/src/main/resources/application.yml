@@ -1,0 +1,15 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /app
+
+
+spring:
+  application:
+    name: shop-app
+  rabbitmq:
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: auto

@@ -1,0 +1,17 @@
+server:
+  port: 6060
+  servlet:
+    context-path: /central
+
+spring:
+  application:
+    name: shop_central
+    #模板引擎
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    prefix: classpath:/templates
+    suffix: .html
